@@ -1,0 +1,34 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Rick and Morty Cards</h1>
+    <form method="get" action="/">
+        <input id=search type="text" name="name" value="{{ search }}" placeholder="Search by name....">
+        <button type="submit">Search</button>
+    </form>
+    <a href="/">Return to first page</a>
+    <div>
+        {% if cards is empty %}
+            <h1>No results found. Please try again!</h1>
+        {% else %}
+            {% for card in cards %}
+                <div class="card">
+                    <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
+                    <div class="card-info">
+                        <h2>{{ card.name }}</h2>
+                        <h3>Status: {{ card.status }}</h3>
+                        <h3>Species: {{ card.species }}</h3>
+                        <h3>Origin: {{ card.origin }}</h3>
+                        <h3>Last known location: {{ card.location }}</h3>
+                        <h3>First seen in: {{ card.episode }}</h3>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="load-more">
+        <form method="get" action="/" name="page">
+            <button name="page" value="{{ page + 1 }}">Load more</button>
+        </form>
+    </div>
+{% endblock %}
