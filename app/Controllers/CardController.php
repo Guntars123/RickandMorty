@@ -17,7 +17,7 @@ class CardController
     public function index(): TwigView
     {
         $search = $_GET['name'] ?? '';
-        $page = $_GET['page'] ?? 1;
+        $page = $_GET['page'] ?? "1";
         $cards = $this->apiClient->getAllCharacters($search, $page);
 
         return new TwigView("index", ['query' => [$search, $page], 'cards' => $cards, 'page' => $page]);

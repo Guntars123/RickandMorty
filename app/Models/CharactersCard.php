@@ -4,27 +4,30 @@ namespace App\Models;
 
 class CharactersCard
 {
+    private int $id;
     private string $name;
     private string $status;
     private string $species;
     private string $gender;
     private string $origin;
     private string $location;
-    private string $episode;
+    private Episode $episode;
     private string $imgUrl;
 
     public function __construct
     (
+        int $id,
         string $name,
         string $status,
         string $species,
         string $gender,
         string $origin,
         string $location,
-        string $episode,
+        Episode $episode,
         string $imgUrl
     )
     {
+        $this->id = $id;
         $this->name = $name;
         $this->status = $status;
         $this->species = $species;
@@ -33,6 +36,11 @@ class CharactersCard
         $this->location = $location;
         $this->episode = $episode;
         $this->imgUrl = $imgUrl;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getName(): string
@@ -65,7 +73,7 @@ class CharactersCard
         return $this->location;
     }
 
-    public function getEpisode(): string
+    public function getEpisode(): Episode
     {
         return $this->episode;
     }
