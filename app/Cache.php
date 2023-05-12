@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App;
 
@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class Cache
 {
-    public static function remember(string $key, string $data, int $ttl = 120): void
+    public static function remember(string $key, string $data, int $ttl = 600): void
     {
         $cacheFile = '../cache/' . $key;
 
@@ -32,7 +32,6 @@ class Cache
         if (!file_exists('../cache/' . $key)) {
             return false;
         }
-
         $content = json_decode(file_get_contents('../cache/' . $key));
 
         return Carbon::now()->lessThan(Carbon::parse($content->expires_at));

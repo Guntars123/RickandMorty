@@ -8,9 +8,37 @@
     <link rel="stylesheet" href="/styles/styles.css">
     <title>Rick and Morty page</title>
 </head>
+<header>
+    <h1>Rick and Morty Page</h1>
+    <div class="nav">
+        <form action="/">
+            <button>HOME</button>
+        </form>
+        <form action="/characters">
+            <button>Characters</button>
+        </form>
+        <form action="/filter">
+            <button>Filter</button>
+        </form>
+        <form action="/locations">
+            <button>Locations</button>
+        </form>
+        <form action="/episodes">
+            <button>Episodes</button>
+        </form>
+    </div>
+</header>
 <body>
 
 {% block content %}{% endblock %}
 
 </body>
+
+<footer>
+    <div class="footer">
+        <h2>Characters: 826 | Locations: 126 | Episodes: 51</h2>
+        <h2>POWERED BY LOCALHOST :)</h2>
+        <h2>by Guntars Vaivods</h2>
+    </div>
+</footer>
 </html>

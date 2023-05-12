@@ -1,0 +1,62 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Rick and Morty Characters filter</h1>
+    <div class="filter">
+        <form method="GET" action="/filter">
+            <input id=search type="text" name="name" value="{{ search }}" placeholder="Search by name....">
+            <label for="status">Status:</label>
+            <select name="status" id="status">
+                <option value="">-- Select Status --</option>
+                <option value="alive">Alive</option>
+                <option value="dead">Dead</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <label for="species">Species:</label>
+            <input type="text" name="species" id="species" value="{{ species }}" placeholder="Search by species....">
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender">
+                <option value="">-- Select Gender --</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="genderless">Genderless</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <a href="filter.twig">
+                <button type="submit">Filter</button>
+            </a>
+        </form>
+    </div>
+    <div>
+    <div>
+        {% if cards is empty %}
+            <h1>No results found. Please try again!</h1>
+        {% else %}
+            {% for card in cards %}
+                <div class="card">
+                    <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
+                    <div class="card-info">
+                        <h2>{{ card.name }}</h2>
+                        <h3>Status: {{ card.status }}</h3>
+                        <h3>Species: {{ card.species }}</h3>
+                        <h3>Origin: {{ card.origin }}</h3>
+                        <h3>Last known location: {{ card.location }}</h3>
+                        <h3>First seen in: {{ card.episode.getName }}</h3>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="load-more-less">
+        {% if page > 1 %}
+            <form method="get" action="/filter" name="page">
+                <button name="page" value="{{ page -1 }}">Previous page</button>
+            </form>
+        {% endif %}
+        {% if page < 42 %}
+            <form method="get" action="/filter" name="page">
+                <button name="page" value="{{ page + 1 }}">Next page</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

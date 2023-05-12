@@ -1,0 +1,33 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Rick and Morty Episodes</h1>
+    {% if episodes is empty %}
+        <h1>No results found. Please try again!</h1>
+    {% else %}
+        {% for episode in episodes %}
+            <div class="location">
+                <div class="location_info">
+                    <h2>{{ episode.name }}</h2>
+                    <h3>Air date: {{ episode.airDate }}</h3>
+                    <h4>Characters: </h4>
+                    {% for characters in episode.characters %}
+                        <h3>*{{ characters }} </h3>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="load-more-less">
+        {% if page > 1 %}
+            <form method="get" action="/episodes" name="page">
+                <button name="page" value="{{ page -1 }}">Previous page</button>
+            </form>
+        {% endif %}
+        {% if page < 3 %}
+            <form method="get" action="/episodes" name="page">
+                <button name="page" value="{{ page + 1 }}">Next page</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

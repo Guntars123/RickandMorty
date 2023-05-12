@@ -14,13 +14,47 @@ class CardController
         $this->apiClient = new ApiClient();
     }
 
+
     public function index(): TwigView
     {
-        $search = $_GET['name'] ?? '';
         $page = $_GET['page'] ?? "1";
-        $cards = $this->apiClient->getAllCharacters($search, $page);
+        return new TwigView("index", ['page' => $page]);
+    }
 
-        return new TwigView("index", ['query' => [$search, $page], 'cards' => $cards, 'page' => $page]);
+    public function characters(): TwigView
+    {
+        $page = $_GET['page'] ?? "1";
+        $cards = $this->apiClient->getAllCharacters($page);
+
+        return new TwigView("characters", ['cards' => $cards, 'page' => $page]);
+    }
+
+    public function filter(): TwigView
+    {
+        $search = $_GET['name'] ?? "";
+        $status = $_GET['status'] ?? "";
+        $species = $_GET['species'] ?? "";
+        $gender = $_GET['gender'] ?? "";
+
+        $cards = $this->apiClient->filterCharacters($search, $status, $species, $gender);
+
+        return new TwigView("filter", ['cards' => $cards]);
+    }
+
+    public function locations(): TwigView
+    {
+        $page = $_GET['page'] ?? "1";
+        $locations = $this->apiClient->getAllLocations($page);
+
+        return new TwigView("locations", ['locations' => $locations, 'page' => $page]);
+    }
+
+    public function episodes(): TwigView
+    {
+        $page = $_GET['page'] ?? "1";
+        $episodes = $this->apiClient->getAllEpisodes($page);
+
+        return new TwigView("episodes", ['episodes' => $episodes, 'page' => $page]);
     }
 }
 

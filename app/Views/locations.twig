@@ -1,0 +1,34 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Rick and Morty Cards</h1>
+    {% if locations is empty %}
+        <h1>No results found. Please try again!</h1>
+    {% else %}
+        {% for location in locations %}
+            <div class="location">
+                <div class="location_info">
+                    <h2>{{ location.name }}</h2>
+                    <h3>Type: {{ location.type }}</h3>
+                    <h3>Dimension: {{ location.dimension }}</h3>
+                    <h4>Residents: </h4>
+                    {% for residents in location.residents %}
+                        <h3>*{{ residents }} </h3>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="load-more-less">
+        {% if page > 1 %}
+            <form method="get" action="/locations" name="page">
+                <button name="page" value="{{ page -1 }}">Previous page</button>
+            </form>
+        {% endif %}
+        {% if page < 7 %}
+            <form method="get" action="/locations" name="page">
+                <button name="page" value="{{ page + 1 }}">Next page</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,43 +1,14 @@
 {% extends "layout.twig" %}
 
+
 {% block content %}
-    <h1>Rick and Morty Cards</h1>
-    <form method="get" action="/">
-        <input id=search type="text" name="name" value="{{ search }}" placeholder="Search by name....">
-        <button type="submit">Search</button>
-    </form>
-    {% if page > 1 %}
-        <a class="return" href="/">Return to first page</a>
-    {% endif %}
-    <div>
-        {% if cards is empty %}
-            <h1>No results found. Please try again!</h1>
-        {% else %}
-            {% for card in cards %}
-                <div class="card">
-                    <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
-                    <div class="card-info">
-                        <h2>{{ card.name }}</h2>
-                        <h3>Status: {{ card.status }}</h3>
-                        <h3>Species: {{ card.species }}</h3>
-                        <h3>Origin: {{ card.origin }}</h3>
-                        <h3>Last known location: {{ card.location }}</h3>
-                        <h3>First seen in: {{ card.episode.getName }}</h3>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
+
+    <h1 class="welcome">Welcome dear guest!</h1>
+    <div class="home">
+        <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="rick">
+        <img src="https://rickandmortyapi.com/api/character/avatar/2.jpeg" alt="morty">
+        <img src="https://rickandmortyapi.com/api/character/avatar/11.jpeg" alt="albert">
+        <img src="https://rickandmortyapi.com/api/character/avatar/28.jpeg" alt="attila">
     </div>
-    <div class="load-more-less">
-        {% if page > 1 %}
-            <form method="get" action="/" name="page">
-                <button name="page" value="{{ page -1 }}">Previous page</button>
-            </form>
-        {% endif %}
-        {% if page < 42 %}
-            <form method="get" action="/" name="page">
-                <button name="page" value="{{ page + 1 }}">Next page</button>
-            </form>
-        {% endif %}
-    </div>
+
 {% endblock %}

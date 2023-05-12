@@ -16,15 +16,15 @@ class CharactersCard
 
     public function __construct
     (
-        int $id,
-        string $name,
-        string $status,
-        string $species,
-        string $gender,
-        string $origin,
-        string $location,
+        int     $id,
+        string  $name,
+        string  $status,
+        string  $species,
+        string  $gender,
+        string  $origin,
+        string  $location,
         Episode $episode,
-        string $imgUrl
+        string  $imgUrl
     )
     {
         $this->id = $id;
