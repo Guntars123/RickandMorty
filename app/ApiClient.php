@@ -92,18 +92,7 @@ class ApiClient
 
             $locations = [];
             foreach ($locationResults as $location) {
-                $residentsName = [];
-                foreach ($location->residents as $residentUrl) {
-                    $locationCacheKey = md5($residentUrl);
-                    if (!Cache::has($locationCacheKey)) {
-                        $response = $this->client->get($residentUrl);
-                        $responseJson = $response->getBody()->getContents();
-                        Cache::remember($locationCacheKey, $responseJson);
-                    } else {
-                        $responseJson = Cache::get($locationCacheKey);
-                    }
-                    $residentsName[] = json_decode($responseJson)->name;
-                }
+                $residentsName = $this->getMultipleCharactersName($location->residents);
                 $locations[] = new Location($location->name, $location->type, $location->dimension, $residentsName);
             }
             return $locations;
@@ -133,18 +122,7 @@ class ApiClient
 
             $episodes = [];
             foreach ($episodeResults as $episode) {
-                $charactersName = [];
-                foreach ($episode->characters as $episodeUrl) {
-                    $episodeCacheKey = md5($episodeUrl);
-                    if (!Cache::has($episodeCacheKey)) {
-                        $response = $this->client->get($episodeUrl);
-                        $responseJson = $response->getBody()->getContents();
-                        Cache::remember($episodeCacheKey, $responseJson);
-                    } else {
-                        $responseJson = Cache::get($episodeCacheKey);
-                    }
-                    $charactersName[] = json_decode($responseJson)->name;
-                }
+                $charactersName = $this->getMultipleCharactersName($episode->characters);
                 $episodes[] = new Episodes($episode->name, $episode->air_date, $charactersName);
             }
             return $episodes;
@@ -154,25 +132,57 @@ class ApiClient
         }
     }
 
+    private function getMultipleCharactersName(array $characters): ?array
+    {
+        $characterIds = filter_var_array($characters, FILTER_SANITIZE_NUMBER_INT);
+        $ids = implode(",", $characterIds);
+        $multipleCharactersCacheKey = md5($ids);
+
+        try {
+            if (!Cache::has($multipleCharactersCacheKey)) {
+                $response = $this->client->get(self::BASE_URI . 'character/', [
+                    'query' => [
+                        'ids' => $ids
+                    ]
+                ]);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember($multipleCharactersCacheKey, $responseJson);
+            } else {
+                $responseJson = Cache::get($multipleCharactersCacheKey);
+            }
+            $charactersNames = [];
+            foreach (json_decode($responseJson)->results as $character) {
+                $charactersNames[] = $character->name;
+            }
+            return $charactersNames;
+        } catch (GuzzleException $e) {
+            return null;
+        }
+    }
+
     private function createCollection(array $fetchResults): ?array
     {
-        if ($fetchResults != null) {
-            $cards = [];
-            foreach ($fetchResults as $card) {
-                $episodeUri = $card->episode[0];
-                $episodeCacheKey = md5($episodeUri);
+        try {
+            if ($fetchResults != null) {
+                $cards = [];
+                foreach ($fetchResults as $card) {
+                    $episodeUri = $card->episode[0];
+                    $episodeCacheKey = md5($episodeUri);
 
-                if (!Cache::has($episodeCacheKey)) {
-                    $episodeJson = $this->client->get($episodeUri)->getBody()->getContents();
-                    Cache::remember($episodeCacheKey, $episodeJson);
-                } else {
-                    $episodeJson = Cache::get($episodeCacheKey);
+                    if (!Cache::has($episodeCacheKey)) {
+                        $episodeJson = $this->client->get($episodeUri)->getBody()->getContents();
+
+                        Cache::remember($episodeCacheKey, $episodeJson);
+                    } else {
+                        $episodeJson = Cache::get($episodeCacheKey);
+                    }
+                    $episode = json_decode($episodeJson);
+
+                    $cards[] = $this->createCharacterCard($card, $episode->name);
                 }
-                $episode = json_decode($episodeJson);
-
-                $cards[] = $this->createCharacterCard($card, $episode->name);
+                return $cards;
             }
-            return $cards;
+        } catch (GuzzleException $e) {
         }
         return null;
     }

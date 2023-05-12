@@ -236,6 +236,18 @@ header {
     color: white;
 }
 
+.headerImages {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+.headerImages img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
 h1 {
     margin: 0;
     font-size: 36px;
@@ -245,7 +257,6 @@ h1 {
 /* Navigation styling */
 .nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
