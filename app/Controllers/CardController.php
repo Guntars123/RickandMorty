@@ -14,7 +14,6 @@ class CardController
         $this->apiClient = new ApiClient();
     }
 
-
     public function index(): TwigView
     {
         $page = $_GET['page'] ?? "1";
@@ -38,7 +37,7 @@ class CardController
 
         $cards = $this->apiClient->filterCharacters($search, $status, $species, $gender);
 
-        return new TwigView("filter", ['cards' => $cards]);
+        return new TwigView("filterCharacter", ['cards' => $cards]);
     }
 
     public function locations(): TwigView

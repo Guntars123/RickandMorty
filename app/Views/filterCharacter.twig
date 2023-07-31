@@ -4,7 +4,8 @@
     <h1>Rick and Morty Characters filter</h1>
     <div class="filter">
         <form method="GET" action="/filter">
-            <input id=search type="text" name="name" value="{{ search }}" placeholder="Search by name....">
+            <label for="name">Name:</label>
+            <input id=name type="text" name="name" value="{{ search }}" placeholder="Search by name....">
             <label for="status">Status:</label>
             <select name="status" id="status">
                 <option value="">-- Select Status --</option>
@@ -22,7 +23,7 @@
                 <option value="genderless">Genderless</option>
                 <option value="unknown">Unknown</option>
             </select>
-            <a href="filter.twig">
+            <a href="filterCharacter.twig">
                 <button type="submit">Filter</button>
             </a>
         </form>
@@ -32,19 +33,21 @@
         {% if cards is empty %}
             <h1>No results found. Please try again!</h1>
         {% else %}
-            {% for card in cards %}
-                <div class="card">
-                    <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
-                    <div class="card-info">
-                        <h2>{{ card.name }}</h2>
-                        <h3>Status: {{ card.status }}</h3>
-                        <h3>Species: {{ card.species }}</h3>
-                        <h3>Origin: {{ card.origin }}</h3>
-                        <h3>Last known location: {{ card.location }}</h3>
-                        <h3>First seen in: {{ card.episode.getName }}</h3>
+            <div class="card-container">
+                {% for card in cards %}
+                    <div class="card">
+                        <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
+                        <div class="card-info">
+                            <h2>{{ card.name }}</h2>
+                            <h3>Status: {{ card.status }}</h3>
+                            <h3>Species: {{ card.species }}</h3>
+                            <h3>Origin: {{ card.origin }}</h3>
+                            <h3>Last known location: {{ card.location }}</h3>
+                            <h3>First seen in: {{ card.episode.getName }}</h3>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
     <div class="load-more-less">

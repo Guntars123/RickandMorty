@@ -1,7 +1,7 @@
 body {
     background-color: #3b3434;
     margin: 0;
-    padding-bottom: 100px; /* Set the height of the footer */
+    padding-bottom: 100px;
 }
 
 html {
@@ -57,17 +57,18 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Card styles */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
 
 .card {
-    display: inline-block;
-    width: 30%;
-    margin: 10px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
-
 }
 
 .card:hover {
@@ -106,6 +107,13 @@ a:hover {
 .card h3 {
     margin: 10px 0 0;
     font-size: 18px;
+}
+
+.filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
 }
 
 .return {
@@ -153,7 +161,7 @@ input[type="text"] {
 }
 
 .home {
-    font-size: 350px; /* Change this value to adjust the font size */
+    font-size: 350px;
     text-align: center;
 }
 
@@ -166,12 +174,10 @@ input[type="text"] {
     max-width: 600px;
 }
 
-/* style for the location information */
 .location_info {
     margin-bottom: 10px;
 }
 
-/* style for the location name */
 .location_info h2 {
     color: #21691b;
     font-size: 24px;
@@ -183,19 +189,16 @@ input[type="text"] {
     font-size: 18px;
 }
 
-/* style for the location type and dimension */
 .location_info h3 {
     color: #171616;
     font-size: 18px;
     margin-bottom: 5px;
 }
 
-/* style for the residents list */
 .location_info h3:not(:first-child) {
     margin-top: 10px;
 }
 
-/* style for the residents */
 .location_info h3 span {
     color: #333;
     font-weight: bold;
@@ -226,7 +229,6 @@ button[type="submit"] {
     margin-left: 10px;
 }
 
-/* Header styling */
 header {
     display: flex;
     justify-content: space-between;
@@ -254,7 +256,6 @@ h1 {
     font-weight: bold;
 }
 
-/* Navigation styling */
 .nav {
     display: flex;
     align-items: center;
@@ -311,7 +312,7 @@ h1 {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 150px; /* Set the height of the footer */
+    height: 150px;
     background-color: #1c1515;
     color: #fff;
     display: flex;

@@ -5,19 +5,21 @@
     {% if cards is empty %}
         <h1>No results found. Please try again!</h1>
     {% else %}
-        {% for card in cards %}
-            <div class="card">
-                <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
-                <div class="card-info">
-                    <h2>{{ card.name }}</h2>
-                    <h3>Status: {{ card.status }}</h3>
-                    <h3>Species: {{ card.species }}</h3>
-                    <h3>Origin: {{ card.origin }}</h3>
-                    <h3>Last known location: {{ card.location }}</h3>
-                    <h3>First seen in: {{ card.episode.getName }}</h3>
+        <div class="card-container">
+            {% for card in cards %}
+                <div class="card">
+                    <img src='{{ card.imgurl }}' alt='{{ card.name }}'>
+                    <div class="card-info">
+                        <h2>{{ card.name }}</h2>
+                        <h3>Status: {{ card.status }}</h3>
+                        <h3>Species: {{ card.species }}</h3>
+                        <h3>Origin: {{ card.origin }}</h3>
+                        <h3>Last known location: {{ card.location }}</h3>
+                        <h3>First seen in: {{ card.episode.getName }}</h3>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% endif %}
     </div>
     <div class="load-more-less">
